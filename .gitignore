@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.env
+
+# Uploaded/processed images (don't push user photos)
+uploads/
+enhanced_web/
+enhanced/
+pic/
+
+# Tracker & reports
+.processed_tracker.json
+enhancement_report.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini

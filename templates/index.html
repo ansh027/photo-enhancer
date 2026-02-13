@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="IPE-CGA — Upload your photo, get professional enhancement with lossless quality. No quality loss on download.">
+    <title>IPE-CGA • Photo Enhancement</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-badge"><span class="dot"></span> IPE-CGA v1.0</div>
+        <h1>Photo Enhancement</h1>
+        <p>Upload your photo — get cinematic enhancement with zero quality loss. Download as lossless PNG.</p>
+    </header>
+
+    <!-- Upload Zone -->
+    <div id="upload-zone" class="upload-zone">
+        <span class="icon">📷</span>
+        <h3>Drop your photo here</h3>
+        <p>or click to browse files</p>
+        <div class="formats">
+            <span>JPG</span>
+            <span>PNG</span>
+            <span>BMP</span>
+            <span>TIFF</span>
+            <span>WEBP</span>
+        </div>
+        <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.bmp,.tiff,.webp">
+    </div>
+
+    <!-- Processing -->
+    <div id="processing-card" class="processing-card">
+        <div class="spinner"></div>
+        <h3>Enhancing Your Photo</h3>
+        <p>Applying 8-step professional pipeline…</p>
+        <div id="processing-steps" class="processing-steps"></div>
+    </div>
+
+    <!-- Error -->
+    <div id="error-card" class="error-card">
+        <div class="error-icon">⚠️</div>
+        <h3>Enhancement Failed</h3>
+        <p id="error-message">Something went wrong.</p>
+        <div class="actions" style="justify-content: center; margin-top: 20px;">
+            <button class="btn btn-secondary" id="error-retry">
+                <span class="icon">🔄</span> Try Again
+            </button>
+        </div>
+    </div>
+
+    <!-- Result Section -->
+    <section id="result-section" class="result-section">
+
+        <!-- Comparison -->
+        <div class="comparison-container">
+            <div class="comparison-header">
+                <div class="tab active" data-view="sidebyside">Side by Side</div>
+                <div class="tab" data-view="slider">Slider</div>
+            </div>
+            <div class="comparison-views">
+                <!-- Side by Side -->
+                <div id="view-sidebyside" class="comparison-view active">
+                    <div class="side-by-side">
+                        <div class="image-box">
+                            <img id="original-img" alt="Original photo">
+                            <span class="label original">Original</span>
+                        </div>
+                        <div class="image-box">
+                            <img id="enhanced-img" alt="Enhanced photo">
+                            <span class="label enhanced">Enhanced</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slider -->
+                <div id="view-slider" class="comparison-view">
+                    <div id="slider-wrapper" class="slider-wrapper">
+                        <img id="slider-after-img" alt="Enhanced">
+                        <div id="slider-before" class="slider-before" style="width: 50%;">
+                            <img id="slider-before-img" alt="Original">
+                        </div>
+                        <div id="slider-handle" class="slider-handle">⟷</div>
+                        <div class="slider-labels">
+                            <span>Original</span>
+                            <span>Enhanced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Resolution</div>
+                <div class="stat-value" id="stat-resolution">—</div>
+                <div class="stat-detail">No downscaling applied</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Brightness</div>
+                <div class="stat-value" id="stat-brightness">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Contrast</div>
+                <div class="stat-value" id="stat-contrast">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">File Size</div>
+                <div class="stat-value" id="stat-file-size">—</div>
+                <div class="stat-detail">Lossless PNG output</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Processing Time</div>
+                <div class="stat-value" id="stat-time">—</div>
+            </div>
+        </div>
+
+        <!-- Enhancements Applied -->
+        <div class="enhancements-card">
+            <h4>Enhancements Applied</h4>
+            <div id="enhancements-list" class="enhancements-list"></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+            <button id="download-btn" class="btn btn-primary">
+                <span class="icon">⬇️</span> Download Enhanced (PNG)
+            </button>
+            <button id="new-photo-btn" class="btn btn-secondary">
+                <span class="icon">📷</span> Enhance Another Photo
+            </button>
+        </div>
+
+    </section>
+
+    <footer class="footer">
+        IPE-CGA • Intelligent Photo Enhancement & Color Grading Agent • Lossless Output
+    </footer>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
