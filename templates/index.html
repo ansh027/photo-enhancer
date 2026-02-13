@@ -1,148 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="IPE-CGA — Upload your photo, get professional enhancement with lossless quality. No quality loss on download.">
-    <title>IPE-CGA • Photo Enhancement</title>
+    <meta name="description"
+        content="IPE-CGA — Upload your photo, get AI-powered analysis and smart enhancement with lossless quality.">
+    <title>IPE-CGA • Smart Photo Enhancement</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-badge"><span class="dot"></span> IPE-CGA v1.0</div>
-        <h1>Photo Enhancement</h1>
-        <p>Upload your photo — get cinematic enhancement with zero quality loss. Download as lossless PNG.</p>
-    </header>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge"><span class="dot"></span> IPE-CGA v2.0</div>
+            <h1>Smart Photo Enhancement</h1>
+            <p>Upload your photo — AI auto-analyzes issues, then applies only the enhancements your photo actually
+                needs.</p>
+        </header>
 
-    <!-- Upload Zone -->
-    <div id="upload-zone" class="upload-zone">
-        <span class="icon">📷</span>
-        <h3>Drop your photo here</h3>
-        <p>or click to browse files</p>
-        <div class="formats">
-            <span>JPG</span>
-            <span>PNG</span>
-            <span>BMP</span>
-            <span>TIFF</span>
-            <span>WEBP</span>
-        </div>
-        <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.bmp,.tiff,.webp">
-    </div>
-
-    <!-- Processing -->
-    <div id="processing-card" class="processing-card">
-        <div class="spinner"></div>
-        <h3>Enhancing Your Photo</h3>
-        <p>Applying 8-step professional pipeline…</p>
-        <div id="processing-steps" class="processing-steps"></div>
-    </div>
-
-    <!-- Error -->
-    <div id="error-card" class="error-card">
-        <div class="error-icon">⚠️</div>
-        <h3>Enhancement Failed</h3>
-        <p id="error-message">Something went wrong.</p>
-        <div class="actions" style="justify-content: center; margin-top: 20px;">
-            <button class="btn btn-secondary" id="error-retry">
-                <span class="icon">🔄</span> Try Again
-            </button>
-        </div>
-    </div>
-
-    <!-- Result Section -->
-    <section id="result-section" class="result-section">
-
-        <!-- Comparison -->
-        <div class="comparison-container">
-            <div class="comparison-header">
-                <div class="tab active" data-view="sidebyside">Side by Side</div>
-                <div class="tab" data-view="slider">Slider</div>
+        <!-- Upload Zone -->
+        <div id="upload-zone" class="upload-zone">
+            <span class="icon">📷</span>
+            <h3>Drop your photo here</h3>
+            <p>or click to browse files</p>
+            <div class="formats">
+                <span>JPG</span>
+                <span>PNG</span>
+                <span>BMP</span>
+                <span>TIFF</span>
+                <span>WEBP</span>
             </div>
-            <div class="comparison-views">
-                <!-- Side by Side -->
-                <div id="view-sidebyside" class="comparison-view active">
-                    <div class="side-by-side">
-                        <div class="image-box">
-                            <img id="original-img" alt="Original photo">
-                            <span class="label original">Original</span>
+            <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.bmp,.tiff,.webp">
+        </div>
+
+        <!-- Analyzing Spinner -->
+        <div id="analyzing-card" class="processing-card">
+            <div class="spinner analyze-spinner"></div>
+            <h3>Analyzing Your Photo</h3>
+            <p>Scanning for exposure, contrast, color, sharpness issues…</p>
+        </div>
+
+        <!-- ═══ Analysis Report Card ═══ -->
+        <div id="analysis-card" class="analysis-card">
+            <!-- Photo Preview -->
+            <div class="analysis-preview-wrap">
+                <img id="analysis-preview" alt="Your photo" class="analysis-preview-img">
+            </div>
+
+            <h3 class="analysis-title">📊 Photo Analysis Report</h3>
+
+            <!-- Overall Score Ring -->
+            <div class="score-section">
+                <div class="score-ring" id="score-ring">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="score-bg" cx="60" cy="60" r="52" />
+                        <circle class="score-fill" id="score-fill" cx="60" cy="60" r="52" stroke-dasharray="326.73"
+                            stroke-dashoffset="326.73" />
+                    </svg>
+                    <div class="score-text">
+                        <span class="score-number" id="score-number">0</span>
+                        <span class="score-label">Quality</span>
+                    </div>
+                </div>
+                <div class="score-info">
+                    <div class="score-summary" id="score-summary">Analyzing…</div>
+                    <div class="score-detail" id="score-detail"></div>
+                </div>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="metrics-grid" id="metrics-grid">
+                <!-- Filled dynamically -->
+            </div>
+
+            <!-- Recommendations -->
+            <div class="recommendations" id="recommendations">
+                <h4>🛠️ Recommended Enhancements</h4>
+                <div class="rec-list" id="rec-list">
+                    <!-- Filled dynamically -->
+                </div>
+            </div>
+
+            <!-- Enhance Button -->
+            <div class="actions analysis-actions">
+                <button id="enhance-btn" class="btn btn-primary btn-glow">
+                    <span class="icon">✨</span> Apply Smart Enhancement
+                </button>
+                <button id="cancel-btn" class="btn btn-secondary">
+                    <span class="icon">↩️</span> Upload Different Photo
+                </button>
+            </div>
+        </div>
+
+        <!-- Processing (Enhancement) -->
+        <div id="processing-card" class="processing-card">
+            <div class="spinner"></div>
+            <h3>Enhancing Your Photo</h3>
+            <p>Applying smart enhancements…</p>
+            <div id="processing-steps" class="processing-steps"></div>
+        </div>
+
+        <!-- Error -->
+        <div id="error-card" class="error-card">
+            <div class="error-icon">⚠️</div>
+            <h3>Something Went Wrong</h3>
+            <p id="error-message">An error occurred.</p>
+            <div class="actions" style="justify-content: center; margin-top: 20px;">
+                <button class="btn btn-secondary" id="error-retry">
+                    <span class="icon">🔄</span> Try Again
+                </button>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <section id="result-section" class="result-section">
+
+            <!-- Comparison -->
+            <div class="comparison-container">
+                <div class="comparison-header">
+                    <div class="tab active" data-view="sidebyside">Side by Side</div>
+                    <div class="tab" data-view="slider">Slider</div>
+                </div>
+                <div class="comparison-views">
+                    <!-- Side by Side -->
+                    <div id="view-sidebyside" class="comparison-view active">
+                        <div class="side-by-side">
+                            <div class="image-box">
+                                <img id="original-img" alt="Original photo">
+                                <span class="label original">Original</span>
+                            </div>
+                            <div class="image-box">
+                                <img id="enhanced-img" alt="Enhanced photo">
+                                <span class="label enhanced">Enhanced</span>
+                            </div>
                         </div>
-                        <div class="image-box">
-                            <img id="enhanced-img" alt="Enhanced photo">
-                            <span class="label enhanced">Enhanced</span>
+                    </div>
+                    <!-- Slider -->
+                    <div id="view-slider" class="comparison-view">
+                        <div id="slider-wrapper" class="slider-wrapper">
+                            <img id="slider-after-img" alt="Enhanced">
+                            <div id="slider-before" class="slider-before" style="width: 50%;">
+                                <img id="slider-before-img" alt="Original">
+                            </div>
+                            <div id="slider-handle" class="slider-handle">⟷</div>
+                            <div class="slider-labels">
+                                <span>Original</span>
+                                <span>Enhanced</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- Slider -->
-                <div id="view-slider" class="comparison-view">
-                    <div id="slider-wrapper" class="slider-wrapper">
-                        <img id="slider-after-img" alt="Enhanced">
-                        <div id="slider-before" class="slider-before" style="width: 50%;">
-                            <img id="slider-before-img" alt="Original">
-                        </div>
-                        <div id="slider-handle" class="slider-handle">⟷</div>
-                        <div class="slider-labels">
-                            <span>Original</span>
-                            <span>Enhanced</span>
-                        </div>
-                    </div>
+            </div>
+
+            <!-- Before/After Score Comparison -->
+            <div class="score-comparison" id="score-comparison">
+                <div class="score-before">
+                    <span class="sc-label">Before</span>
+                    <span class="sc-value" id="sc-before">—</span>
+                </div>
+                <div class="score-arrow">→</div>
+                <div class="score-after">
+                    <span class="sc-label">After</span>
+                    <span class="sc-value" id="sc-after">—</span>
                 </div>
             </div>
-        </div>
 
-        <!-- Stats -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Resolution</div>
-                <div class="stat-value" id="stat-resolution">—</div>
-                <div class="stat-detail">No downscaling applied</div>
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Resolution</div>
+                    <div class="stat-value" id="stat-resolution">—</div>
+                    <div class="stat-detail">No downscaling applied</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Brightness</div>
+                    <div class="stat-value" id="stat-brightness">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Contrast</div>
+                    <div class="stat-value" id="stat-contrast">—</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">File Size</div>
+                    <div class="stat-value" id="stat-file-size">—</div>
+                    <div class="stat-detail">Lossless PNG output</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Processing Time</div>
+                    <div class="stat-value" id="stat-time">—</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Brightness</div>
-                <div class="stat-value" id="stat-brightness">—</div>
+
+            <!-- Enhancements Applied -->
+            <div class="enhancements-card">
+                <h4>Enhancements Applied</h4>
+                <div id="enhancements-list" class="enhancements-list"></div>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">Contrast</div>
-                <div class="stat-value" id="stat-contrast">—</div>
+
+            <!-- Actions -->
+            <div class="actions">
+                <button id="download-btn" class="btn btn-primary">
+                    <span class="icon">⬇️</span> Download Enhanced (PNG)
+                </button>
+                <button id="new-photo-btn" class="btn btn-secondary">
+                    <span class="icon">📷</span> Enhance Another Photo
+                </button>
             </div>
-            <div class="stat-card">
-                <div class="stat-label">File Size</div>
-                <div class="stat-value" id="stat-file-size">—</div>
-                <div class="stat-detail">Lossless PNG output</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-label">Processing Time</div>
-                <div class="stat-value" id="stat-time">—</div>
-            </div>
-        </div>
 
-        <!-- Enhancements Applied -->
-        <div class="enhancements-card">
-            <h4>Enhancements Applied</h4>
-            <div id="enhancements-list" class="enhancements-list"></div>
-        </div>
+        </section>
 
-        <!-- Actions -->
-        <div class="actions">
-            <button id="download-btn" class="btn btn-primary">
-                <span class="icon">⬇️</span> Download Enhanced (PNG)
-            </button>
-            <button id="new-photo-btn" class="btn btn-secondary">
-                <span class="icon">📷</span> Enhance Another Photo
-            </button>
-        </div>
+        <footer class="footer">
+            IPE-CGA • Intelligent Photo Enhancement & Color Grading Agent • Auto-Analyze & Smart Enhancement
+        </footer>
 
-    </section>
+    </div>
 
-    <footer class="footer">
-        IPE-CGA • Intelligent Photo Enhancement & Color Grading Agent • Lossless Output
-    </footer>
-
-</div>
-
-<script src="/static/app.js"></script>
+    <script src="/static/app.js"></script>
 </body>
+
 </html>

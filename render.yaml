@@ -3,7 +3,8 @@ services:
     name: photo-enhancer
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 300 --workers 2
+    plan: free
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 600 --workers 1
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.11"
